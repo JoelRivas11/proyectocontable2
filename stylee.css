@@ -1,0 +1,142 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #222;
+}
+
+header {
+    background-color: #071e1b;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+nav a:hover {
+    color: #8ee3a1;
+}
+
+.inicio {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #dff2e1;
+}
+
+.contenido-inicio {
+    max-width: 800px;
+}
+
+h1 {
+    font-size: 45px;
+    margin-bottom: 20px;
+}
+
+h1 span {
+    display: block;
+    color: #176b45;
+}
+
+.contenido-inicio p {
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+
+.boton {
+    display: inline-block;
+    background-color: #176b45;
+    color: white;
+    padding: 14px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.boton:hover {
+    background-color: #0d4d32;
+}
+
+footer {
+    background-color: #071e1b;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+
+/* Para celulares */
+
+@media (max-width: 700px) {
+
+    header {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    nav {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+
+    .logo {
+        font-size: 21px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .contenido-inicio p {
+        font-size: 16px;
+    }
+
+    .inicio {
+        min-height: 70vh;
+        padding: 30px 15px;
+    }
+
+}
+.contador {
+    text-align: center;
+    padding: 25px;
+    margin: 30px auto;
+}
+
+.contador h2 {
+    font-size: 22px;
+}
+
+#visitas {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+

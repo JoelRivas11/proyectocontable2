@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Preguntas</title>
+
+    <link rel="stylesheet" href="boton.css">
+
+<style>
+.volver {
+            display: block;
+            width: fit-content;
+            margin: 30px auto;
+            padding: 12px 25px;
+            background: #16805c;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <section class="foro" id="foro">
+
+        <h2>💬 Foro de Preguntas</h2>
+
+        <p>
+            ¿Tienes alguna pregunta sobre el Bachillerato Contable?
+        </p>
+
+        <input
+            type="text"
+            id="nombre"
+            placeholder="Escribe tu nombre">
+
+        <textarea
+            id="pregunta"
+            placeholder="Escribe tu pregunta"></textarea>
+
+        <button onclick="publicarPregunta()">
+
+            Publicar pregunta
+
+        </button>
+
+        <div id="listaPreguntas"></div>
+
+    </section>
+
+
+    <script>
+
+        let preguntas = JSON.parse(localStorage.getItem("preguntas")) || [];
+
+
+        function publicarPregunta() {
+
+            let nombre = document.getElementById("nombre").value;
+
+            let pregunta = document.getElementById("pregunta").value;
+
+
+            if (nombre === "" || pregunta === "") {
+
+                alert("Completa todos los campos.");
+
+                return;
+
+            }
+
+
+            preguntas.push({
+
+                nombre: nombre,
+
+                pregunta: pregunta
+
+            });
+
+
+            localStorage.setItem(
+                "preguntas",
+                JSON.stringify(preguntas)
+            );
+
+
+            document.getElementById("nombre").value = "";
+
+            document.getElementById("pregunta").value = "";
+
+
+            mostrarPreguntas();
+
+        }
+
+
+        function mostrarPreguntas() {
+
+            let lista = document.getElementById("listaPreguntas");
+
+            lista.innerHTML = "";
+
+
+            preguntas.forEach(function(item) {
+
+                lista.innerHTML += `
+
+                    <div class="pregunta">
+
+                        <h3>👤 ${item.nombre}</h3>
+
+                        <p>${item.pregunta}</p>
+
+                    </div>
+
+                `;
+
+            });
+
+        }
+
+
+        mostrarPreguntas();
+
+    </script>
+
+<a href="index.html" class="volver">
+        ← Volver al inicio
+    </a>
+
+
+
+</body>
+
+</html>

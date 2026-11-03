@@ -1,0 +1,662 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Bachillerato Técnico Vocacional en Gestion Organizacional</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f2f5f3;
+            color: #222;
+        }
+
+        header {
+            background: #0b3d2e;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background: #16805c;
+        }
+
+        .inicio {
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 5%;
+            background: #dfeae5;
+        }
+
+        .contenido-inicio {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            width: 100%;
+            max-width: 1250px;
+        }
+
+        .texto-inicio {
+            flex: 1;
+        }
+
+        h1 {
+            font-size: clamp(28px, 4vw, 43px);
+            line-height: 1.3;
+            margin-top: 0;
+        }
+
+        h1 span {
+            display: block;
+            color: #16805c;
+        }
+
+        .texto-inicio p {
+            font-size: clamp(16px, 2vw, 19px);
+            line-height: 1.7;
+        }
+
+        .boton {
+            display: inline-block;
+            background: #0b3d2e;
+            color: white;
+            padding: 14px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+
+        .boton:hover {
+            background: #16805c;
+        }
+
+        .imagen-inicio {
+            flex: 0 0 40%;
+            max-width: 420px;
+            width: 100%;
+            min-width: 0;
+        }
+
+        .imagen-inicio img {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            border-radius: 15px;
+            display: block;
+        }
+
+        /* CONTADOR DE VISITAS */
+
+        .contador {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: white;
+            color: #0b3d2e;
+            padding: 7px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            box-shadow: 0 2px 7px #aaa;
+            z-index: 1000;
+        }
+
+        #visitas {
+            font-weight: bold;
+            color: #16805c;
+        }
+
+        footer {
+            background: #0b3d2e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        /* ASISTENTE VIRTUAL */
+
+        #chat-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #0b3d2e;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 26px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        #chat-btn:hover {
+            background: #16805c;
+        }
+
+        #chat-container {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 350px;
+            max-width: calc(100vw - 30px);
+            height: 450px;
+            max-height: calc(100vh - 120px);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        #chat-header {
+            background: #0b3d2e;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        #chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #f9f9f9;
+        }
+
+        .mensaje {
+            padding: 10px 14px;
+            border-radius: 8px;
+            max-width: 80%;
+            line-height: 1.4;
+            font-size: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .mensaje.bot {
+            background: #e1efe9;
+            color: #0b3d2e;
+            align-self: flex-start;
+        }
+
+        .mensaje.usuario {
+            background: #0b3d2e;
+            color: white;
+            align-self: flex-end;
+        }
+
+        #chat-input-area {
+            display: flex;
+            padding: 10px;
+            background: white;
+            border-top: 1px solid #ddd;
+        }
+
+        #chat-input {
+            flex: 1;
+            min-width: 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        #chat-send {
+            background: #0b3d2e;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-left: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #chat-send:hover {
+            background: #16805c;
+        }
+
+        /* TABLETS */
+
+        @media (max-width: 900px) {
+
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding: 25px 15px;
+            }
+
+            .logo {
+                margin-top: 20px;
+            }
+
+            nav {
+                width: 100%;
+            }
+
+            nav a {
+                font-size: 15px;
+            }
+
+            .contenido-inicio {
+                gap: 25px;
+            }
+
+            .imagen-inicio img {
+                height: 300px;
+            }
+
+        }
+
+        /* CELULARES */
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 20px 12px;
+            }
+
+            .logo {
+                font-size: 20px;
+                margin-top: 25px;
+            }
+
+            nav {
+                flex-direction: column;
+                width: 100%;
+                gap: 3px;
+            }
+
+            nav a {
+                display: block;
+                width: 100%;
+                padding: 11px;
+                text-align: center;
+                background: rgba(255, 255, 255, 0.08);
+            }
+
+            .inicio {
+                padding: 40px 18px;
+            }
+
+            .contenido-inicio {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+            }
+
+            .texto-inicio {
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 29px;
+            }
+
+            .texto-inicio p {
+                font-size: 16px;
+            }
+
+            .imagen-inicio {
+                width: 100%;
+                max-width: 350px;
+                flex: none;
+            }
+
+            .imagen-inicio img {
+                height: 220px;
+                object-fit: contain;
+            }
+
+            .boton {
+                padding: 12px 22px;
+            }
+
+            .contador {
+                position: fixed;
+                top: 8px;
+                left: 8px;
+                font-size: 11px;
+                padding: 6px 9px;
+            }
+
+            footer {
+                font-size: 14px;
+                padding: 18px 12px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="contador">
+        👁️ <span id="visitas">0</span> visitas
+    </div>
+
+    <header>
+
+        <div class="logo">
+            📊
+        </div>
+
+        <nav>
+
+            <a href="informacion.html">Información</a>
+
+            <a href="objetivo.html">Objetivos</a>
+
+            <a href="ingreso.html">Perfil de ingreso</a>
+
+            <a href="egreso.html">Perfil de egreso</a>
+
+            <a href="galeria.html">Galería de fotos</a>
+
+            <a href="malla.html">Malla Curricular</a>
+
+            <a href="formulario.html">Preguntas</a>
+
+        </nav>
+
+    </header>
+
+    <section class="inicio">
+
+        <div class="contenido-inicio">
+
+            <div class="texto-inicio">
+
+                <h1>
+                    Bachillerato Técnico Vocacional en
+                    <span>Gestión Organizacional</span>
+                    <span>(Contador)</span>
+                </h1>
+
+                <p>
+                    Una formación orientada al desarrollo de competencias
+                    administrativas, financieras y contables para el mundo
+                    laboral y los estudios superiores.
+                </p>
+
+                <a href="informacion.html" class="boton">
+                    Conocer más
+                </a>
+
+            </div>
+
+            <div class="imagen-inicio">
+
+                <img src="logoinng.jpeg"
+                     alt="Logo del bachillerato técnico administrativo contable">
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <footer>
+
+        <p>
+            Proyecto educativo | Bachillerato Técnico Vocacional
+            en Gestión Organizacional
+        </p>
+
+    </footer>
+
+
+    <!-- ASISTENTE VIRTUAL - CHATBOT -->
+
+    <button id="chat-btn" onclick="toggleChat()">💬</button>
+
+    <div id="chat-container">
+
+        <div id="chat-header">
+
+            <span>Asistente Contable 🤖</span>
+
+            <button id="chat-close" onclick="toggleChat()">✖</button>
+
+        </div>
+
+        <div id="chat-messages">
+
+            <div class="mensaje bot">
+                ¡Hola! Soy tu asistente virtual del
+                <strong>Bachillerato Técnico Vocacional en Gestión Organizacional</strong>.
+                ¿En qué te puedo ayudar hoy?
+                Puedes preguntar sobre objetivos, perfil de ingreso,
+                egreso o malla curricular.
+            </div>
+
+        </div>
+
+        <div id="chat-input-area">
+
+            <input type="text"
+                   id="chat-input"
+                   placeholder="Escribe tu pregunta..."
+                   onkeypress="handleKeyPress(event)">
+
+            <button id="chat-send" onclick="enviarMensaje()">
+                Enviar
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        /* CONTADOR DE VISITAS */
+
+        let visitas = localStorage.getItem("visitas");
+
+        if (visitas === null) {
+            visitas = 0;
+        } else {
+            visitas = parseInt(visitas);
+        }
+
+        if (sessionStorage.getItem("visitaContada") === null) {
+
+            visitas++;
+
+            localStorage.setItem("visitas", visitas);
+
+            sessionStorage.setItem("visitaContada", "si");
+
+        }
+
+        document.getElementById("visitas").innerText =
+            localStorage.getItem("visitas") || 0;
+
+
+        /* FUNCIONES DEL ASISTENTE VIRTUAL */
+
+        function toggleChat() {
+
+            const chat = document.getElementById('chat-container');
+
+            if (chat.style.display === 'flex') {
+
+                chat.style.display = 'none';
+
+            } else {
+
+                chat.style.display = 'flex';
+
+                document.getElementById('chat-input').focus();
+
+            }
+
+        }
+
+
+        function enviarMensaje() {
+
+            const input = document.getElementById('chat-input');
+
+            const texto = input.value.trim();
+
+            if (texto === '') return;
+
+            agregarMensaje(texto, 'usuario');
+
+            input.value = '';
+
+            const respuesta = obtenerRespuestaBot(texto.toLowerCase());
+
+            agregarMensaje(respuesta, 'bot');
+
+        }
+
+
+        function handleKeyPress(event) {
+
+            if (event.key === 'Enter') {
+
+                enviarMensaje();
+
+            }
+
+        }
+
+
+        function agregarMensaje(texto, remitente) {
+
+            const mensajesDiv = document.getElementById('chat-messages');
+
+            const nuevoMensaje = document.createElement('div');
+
+            nuevoMensaje.className = `mensaje ${remitente}`;
+
+            nuevoMensaje.textContent = texto;
+
+            mensajesDiv.appendChild(nuevoMensaje);
+
+            mensajesDiv.scrollTop = mensajesDiv.scrollHeight;
+
+        }
+
+
+        function obtenerRespuestaBot(pregunta) {
+
+            if (pregunta.includes('hola') ||
+                pregunta.includes('buenos dias') ||
+                pregunta.includes('buenas')) {
+
+                return '¡Hola! Pregúntame sobre la información del bachillerato, objetivos, perfil de ingreso, egreso o materias.';
+
+            } else if (pregunta.includes('informacion') ||
+                       pregunta.includes('de que trata') ||
+                       pregunta.includes('que es')) {
+
+                return 'Está orientado al desarrollo de competencias administrativas, financieras y contables para el mundo laboral y los estudios superiores.';
+
+            } else if (pregunta.includes('objetivo') ||
+                       pregunta.includes('meta')) {
+
+                return 'El objetivo principal es formar profesionales capaces de gestionar procesos administrativos y contables eficientemente en las organizaciones.';
+
+            } else if (pregunta.includes('ingreso') ||
+                       pregunta.includes('requisito') ||
+                       pregunta.includes('entrar')) {
+
+                return 'El perfil de ingreso requiere interés por la administración, finanzas, contabilidad, ética profesional y facilidad para el trabajo en equipo.';
+
+            } else if (pregunta.includes('egreso') ||
+                       pregunta.includes('egresar') ||
+                       pregunta.includes('trabajo')) {
+
+                return 'Al egresar estarás preparado para desempeñarte en áreas contables, control de inventarios, gestión administrativa, atención al cliente y continuar estudios universitarios.';
+
+            } else if (pregunta.includes('malla') ||
+                       pregunta.includes('materias') ||
+                       pregunta.includes('plan de estudio')) {
+
+                return 'La malla curricular incluye módulos técnicos especializados en contabilidad, administración, legislación fiscal, informática aplicada y gestión financiera.';
+
+            } else if (pregunta.includes('contacto') ||
+                       pregunta.includes('duda') ||
+                       pregunta.includes('preguntas')) {
+
+                return 'Puedes revisar nuestra sección de preguntas frecuentes o consultar directamente en la institución educativa.';
+
+            } else {
+
+                return 'No estoy seguro de entender tu pregunta. Intenta preguntar sobre: información, objetivos, perfil de ingreso, perfil de egreso o malla curricular.';
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
